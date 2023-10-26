@@ -162,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  //登录处理
   loginHandle() async {
     // 当按钮可操作时才触发回调
     setState(() {
@@ -182,27 +183,35 @@ class _LoginPageState extends State<LoginPage> {
           );
         }else{
 
-
-          await PrefUtil.preferences.setString(
-              'userName', _userName);
-          await PrefUtil.preferences.setString(
-              'password', _password);
-
           appState.jwt = data["data"]["token"];
           appState.jwtEx = DateTime.parse(data["data"]["expire"]);
 
           //获取用户信息
           await MyHttpRequest.myHttpRequest.GetSubscribeToken(
-                  (data){
-                appState.token = data["data"]["token"];
-                appState.u = data["data"]["u"];
-                appState.d = data["data"]["d"];
-                appState.transfer_enable = data["data"]["transfer_enable"];
-                appState.expired_at = DateTime.parse(data["data"]["expired_at"]);
-                appState.user_name = data["data"]["user_name"];
-                appState.plan_name = data["data"]["plan_name"];
+              (data) async {
+                  if(data["data"]["expired_at"] == null || data["data"]["plan_name"] == ""){
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('账号到期或者流量用完，请充值购买:)'),
+                      ),
+                    );
+                    PrefUtil.ClearUserNameAndPasswd();
+                    return;
+                  }else{
+                    appState.token = data["data"]["token"];
+                    appState.u = data["data"]["u"];
+                    appState.d = data["data"]["d"];
+                    appState.transfer_enable = data["data"]["transfer_enable"];
+                    appState.expired_at = DateTime.parse(data["data"]["expired_at"]);
+                    appState.user_name = data["data"]["user_name"];
+                    appState.plan_name = data["data"]["plan_name"];
+                    PrefUtil.SetUserNameAndPasswd(_userName,_password);
+                  }
+
               }
           );
+
+
 
           //获取节点列表
           await MyHttpRequest.myHttpRequest.GetNodeInfo(

@@ -76,8 +76,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
         padding:const EdgeInsets.symmetric(horizontal: 10), // 设置底部间距为16.0
         child: ElevatedButton.icon(
           onPressed: () {
-            PrefUtil.preferences.remove("userName");
-            PrefUtil.preferences.remove("password");
+            PrefUtil.ClearUserNameAndPasswd();
             SystemNavigator.pop();
           },
           label: const Text('退出账号',style: TextStyle(fontSize: 16, color: Colors.white,height: 2)), // 文字样式),

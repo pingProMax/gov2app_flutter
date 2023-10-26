@@ -56,13 +56,11 @@ class MyHttpRequest {
     final response = await dio.get(
         // ignore: prefer_interpolation_to_compose_strings
         global.subApi + '?token=${token}&flag=v2rayn&flag_info_hide=true',
-        options: Options(headers: {"Authorization":jwt})
     );
-    print(response.data);
     if(response.data is String){
       call(response.data);
     }else{
-      print("获取错误");
+      throw FormatException("未获取到订阅信息");
     }
 
   }

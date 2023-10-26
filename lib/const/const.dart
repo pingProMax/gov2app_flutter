@@ -33,31 +33,13 @@ class PrefUtil {
     return preferences;
   }
 
-  static setValue(String key, Object value) {
-    switch (value.runtimeType) {
-      case String:
-        preferences.setString(key, value as String);
-        break;
-      case bool:
-        preferences.setBool(key, value as bool);
-        break;
-      case int:
-        preferences.setInt(key, value as int);
-        break;
-      default:
-    }
+  static ClearUserNameAndPasswd() async {
+    await preferences.remove("userName");
+    await preferences.remove("password");
+  }
+  static SetUserNameAndPasswd(String _userName,_password) async {
+    await preferences.setString('userName', _userName);
+    await preferences.setString('password', _password);
   }
 
-  static Object getValue(String key, Object defaultValue) {
-    switch (defaultValue.runtimeType) {
-      case String:
-        return preferences.getString(key) ?? "";
-      case bool:
-        return preferences.getBool(key) ?? false;
-      case int:
-        return preferences.getInt(key) ?? 0;
-      default:
-        return defaultValue;
-    }
-  }
 }
