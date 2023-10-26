@@ -2,7 +2,7 @@
 // api------
 import 'package:shared_preferences/shared_preferences.dart';
 
-String ApiUrl = "https://www.52bd.top";
+String ApiUrl = "https://127.0.0.1：8080";
 
 class Global {
 
@@ -10,10 +10,10 @@ class Global {
 
   String Vv = "v 1.0"; //版本号
 
-  String RegisterUrl = "https://www.52bd.top/register"; //注册地址
+  String RegisterUrl = "https://xxxx.com/register"; //注册地址
 
 
-  String PlanUrl = "https://www.52bd.top/user/plan"; //购买套餐地址
+  String PlanUrl = "https://xxxx.com/user/plan"; //购买套餐地址
 
 
 
