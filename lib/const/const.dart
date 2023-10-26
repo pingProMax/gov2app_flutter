@@ -2,11 +2,9 @@
 // api------
 import 'package:shared_preferences/shared_preferences.dart';
 
-String ApiUrl = "https://127.0.0.1：8080";
+String ApiUrl = "http://192.168.0.102:8080";
 
 class Global {
-
-  String AppName = "GoV2App"; //app名字
 
   String Vv = "v 1.0"; //版本号
 
