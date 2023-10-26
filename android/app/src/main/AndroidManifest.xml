@@ -2,9 +2,9 @@
     <!-- Required to fetch data from the internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="gov2app_flutter"
+        android:label="v2加速"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/ic_launcher_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

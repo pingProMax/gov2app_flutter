@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(_userName != "" && _password != ""){
+    if(PrefUtil.preferences.getString("userName") != null && PrefUtil.preferences.getString("password") != null){
       loginHandle();
     }
 
