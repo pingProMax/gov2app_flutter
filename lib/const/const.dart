@@ -2,16 +2,16 @@
 // api------
 import 'package:shared_preferences/shared_preferences.dart';
 
-String ApiUrl = "http://192.168.0.102:8080";
+String ApiUrl = "https://www.xxx.com";
 
 class Global {
 
   String Vv = "v 1.0"; //版本号
 
-  String RegisterUrl = "https://xxxx.com/register"; //注册地址
+  String RegisterUrl = "https://www.xxx.com/register"; //注册地址
 
 
-  String PlanUrl = "https://xxxx.com/user/plan"; //购买套餐地址
+  String PlanUrl = "https://www.xxxx.com/xxxxx"; //购买套餐地址
 
 
 

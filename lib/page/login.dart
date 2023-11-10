@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gov2app_flutter/appstate.dart';
 import 'package:gov2app_flutter/page/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gov2app_flutter/const/const.dart';
 
@@ -55,10 +53,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(PrefUtil.preferences.getString("userName"));
+    print(PrefUtil.preferences.getString("password"));
     if(PrefUtil.preferences.getString("userName") != null && PrefUtil.preferences.getString("password") != null){
+
       loginHandle();
     }
-
     return Scaffold(
       body: Form(
         key: _formKey, // 设置globalKey，用于后面获取FormStat
@@ -154,7 +154,11 @@ class _LoginPageState extends State<LoginPage> {
       child: SizedBox(
         child: CupertinoButton.filled(
           onPressed: isLogButDisabled ? null : () async {
-            loginHandle();
+            if ((_formKey.currentState as FormState).validate()) {
+              (_formKey.currentState as FormState).save();
+              loginHandle();
+            }
+
           },
           child: const Text('登录'),
         ),
@@ -164,13 +168,13 @@ class _LoginPageState extends State<LoginPage> {
 
   //登录处理
   loginHandle() async {
-    // 当按钮可操作时才触发回调
-    setState(() {
-      isLogButDisabled = true; // 禁用按钮
-    });
-    // 表单校验通过才会继续执行
-    if ((_formKey.currentState as FormState).validate()) {
-      (_formKey.currentState as FormState).save();
+
+      // 当按钮可操作时才触发回调
+      setState(() {
+        isLogButDisabled = true; // 禁用按钮
+      });
+
+
       //TODO 执行登录方法
       Map<String,dynamic> data;
       try {
@@ -191,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
               (data) async {
                   if(data["data"]["expired_at"] == null || data["data"]["plan_name"] == ""){
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('账号到期或者流量用完，请充值购买:)'),
                       ),
                     );
@@ -246,7 +250,6 @@ class _LoginPageState extends State<LoginPage> {
       }
 
 
-    }
   }
 
   Widget buildForgetPasswordText(BuildContext context) {
@@ -278,9 +281,11 @@ class _LoginPageState extends State<LoginPage> {
         obscureText: _isObscure, // 是否显示文字
         onSaved: (v) => _password = v!,
         validator: (v) {
+
           if (v!.isEmpty) {
             return '请输入密码';
           }
+
         },
         decoration: InputDecoration(
             labelText: "密码",
@@ -292,6 +297,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () {
                 // 修改 state 内部变量, 且需要界面内容更新, 需要使用 setState()
                 setState(() {
+
                   _isObscure = !_isObscure;
                   _eyeColor = (_isObscure
                       ? Colors.grey
@@ -309,6 +315,7 @@ class _LoginPageState extends State<LoginPage> {
         var emailReg = RegExp(
             r"^.{6,16}$");
         if (!emailReg.hasMatch(v!)) {
+
           return '请输入正确的用户';
         }
       },

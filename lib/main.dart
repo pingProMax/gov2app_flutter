@@ -9,6 +9,8 @@ import 'package:gov2app_flutter/page/login.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefUtil.init();
+  FlutterV2ray flutterV2ray = FlutterV2ray(onStatusChanged: (V2RayStatus status) {  });
+  flutterV2ray.requestPermission();// 获取权限
   runApp(const MyApp());
 
 }
